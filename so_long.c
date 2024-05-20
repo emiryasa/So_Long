@@ -6,7 +6,7 @@
 /*   By: eyasa <eyasa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/05/18 21:59:59 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/05/20 21:38:03 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char *argv[])
 }
 
 
-void __attribute__((destructor)) a(void)
-{
-	    system("leaks so_long");
-}
+// void __attribute__((destructor)) a(void)
+// {
+// 	    system("leaks so_long");
+// }

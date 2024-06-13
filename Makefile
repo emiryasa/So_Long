@@ -1,22 +1,28 @@
 NAME = so_long
-SRCS = map.c
-OBJS = ${SRCS:.c=.o}
-G_FLAGS = -Wall -Werror -Wextra
+CC = gcc
 LIBFTDIR = libft
-LIBFT = ./${LIBFTDIR}/libft.a
+LIBFT = $(LIBFTDIR)/libft.a
+# MLXDIR = minilibx
+# MLX = $(MLXDIR)/libmlx.a
+SRCS = map.c so_long.c
+OBJS := $(SRCS:.c=.o)
+FLAGS = -Wall -Wextra -Werror
+# FRAMEWORKS = -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
-$(NAME) : $(LIBFTDIR) $(OBJS)
+$(NAME): $(OBJS) $(LIBFTDIR) 
 	make -C $(LIBFTDIR) 
-	gcc $(G_FLAGS) $(NAME).c $(OBJS) ${LIBFT} -o $(NAME)
+	$(CC) -g $(FLAGS) $(OBJS) $(LIBFT)  -o $(NAME)
 
-clean: $(LIBFTDIR)
+clean: 
+	rm -rf $(OBJS)
 	make clean -C $(LIBFTDIR)
-	rm -f $(OBJS)
 
-fclean : clean
+fclean: clean
+	rm -rf $(NAME)
 	make fclean -C $(LIBFTDIR)
-	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -3,106 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eyasa <eyasa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:46:29 by eyasa             #+#    #+#             */
-/*   Updated: 2024/05/18 22:09:16 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/13 21:26:59 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-// void	check_width(char *line, t_map *map)
-// {
-// 	if (map->height == 0)
-// 	{
-// 		map->width = ft_custom_strlen(line);
-// 	}
-// 	else if (map->width != ft_custom_strlen(line))
-// 	{
-// 		free(line);
-// 		// handle_error("Invalid map", -1, map);
-// 	}
-// }
-void add_row(t_map *map, char *row, int height)
-{
-    char **new_map;
-    int i;
 
-    new_map = (char **)malloc(sizeof(char *) * (height + 1));
-    if (!new_map)
-    {
-        ft_printf("Memory error.");
-        exit(1);
-    }
-    i = 0;
-    while (i < height)
-    {
-        new_map[i] = ft_strdup(map->map[i]);
-        free(map->map[i]);
-        i++;
-    }
-    new_map[i] = ft_strdup(row);
-    if (map->map != NULL)
-        free(map->map);
-    map->map = new_map;
-}
-void	*my_realloc(void *ptr, size_t size)
+int strlen_newline(char *line)
 {
-	void	*new_ptr;
+	int i;
 
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		ft_printf("Yeniden boyutlandırma başarısız oldu!\n");
-		free(ptr);
-		exit(EXIT_FAILURE);
-	}
-	if (ptr)
-	{
-		ft_memcpy(new_ptr, ptr, size);
-		free(ptr);
-	}
-	return (new_ptr);
+	i = 0;
+	if (!line)
+		return (0);
+	while (line[i] && line[i] != '\n')
+		i++;
+	return (i);
 }
-void	add_line(t_map *map, char *line)
+
+static void	countline(t_map *map)
 {
-	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
-				+ 1));
-	map->map[map->height] = ft_strdup(line);
-	map->map_copy = (char **)my_realloc(map->map_copy, sizeof(char *)
-			* (map->height + 1));
-	map->map_copy[map->height] = ft_strdup(line);
-	if (!map->map[map->height] || !map->map || !map->map_copy
-		|| !map->map_copy[map->height])
-		// handle_error("Memory allocation failed", -1, map);
-	map->height++;
+	char	*str;
+	int	i;
+	int fd;
+
+	fd = open(map->mapname, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("Error: File not open.");
+		exit(1);
+	}
+	i = 0;
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (str == NULL)
+			break;
+		free(str);
+		i++; 
+	}
+	map->mapy = i;
+	close(fd);
 }
-void map_read(t_map *map, int fd)
+
+void	read_map(t_map *map)
 {
-    char *row;
-    int height;
-	
-    height = 0;
-    map->map = (char **)malloc(sizeof(char *) * (1));
+    int	i;
+	int	fd;
+
+	i = 0;
+	countline(map);
+	map->map = (char **)malloc(sizeof(char *) * (map->mapy + 1));
     if (!map->map)
     {
         ft_printf("Map açılmadı");
         exit(1);
     }
-    while (1)
-    {
-        row = get_next_line(fd);
-        if (!row)
-		{
-			free(row);
-            break;
-		}
-		map->height = height;
-        add_line(map, row);
-		height++;
-        ft_printf("%s\n", row);
-        free(row);
-        height++;
-    }
+	fd = open(map->mapname, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf("Error: File not opened.");
+		exit(1);
+	}
+    while (i < map->mapy)
+	{
+		map->map[i] = get_next_line(fd);
+		i++;
+	}
+	map->map[i] = NULL;
+	map->mapx = strlen_newline(map->map[0]);
+	close(fd);
 }
 
+void	free_map(t_map *map, int n)
+{
+	int	i;
+
+	i = 0;
+	if (n == 1)
+	{
+		while (i < map->mapy)
+		{
+			free(map->map[i]);
+			i++;
+		}
+		free(map->map);
+	}
+	else
+	{
+		while (i < map->mapy)
+		{
+			free(map->mapcopy[i]);
+			i++;
+		}
+		free(map->mapcopy);
+	}
+}

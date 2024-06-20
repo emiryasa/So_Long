@@ -13,15 +13,18 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFTDIR) 
 	make -C $(LIBFTDIR) 
-	$(CC) -g $(FLAGS) $(OBJS) $(LIBFT)  -o $(NAME)
+	make -C $(MLXDIR)
+	$(CC) -g $(FLAGS) $(OBJS) $(LIBFT) $(MLX) $(FRAMEWORKS) -o $(NAME)
 
 clean: 
 	rm -rf $(OBJS)
+	make clean -C $(MLXDIR)
 	make clean -C $(LIBFTDIR)
 
 fclean: clean
 	rm -rf $(NAME)
 	make fclean -C $(LIBFTDIR)
+	make fclean -C $(MLXDIR)
 
 re: fclean all
 

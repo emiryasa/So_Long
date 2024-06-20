@@ -64,6 +64,7 @@ typedef struct s_map
 void read_map(t_game *map);
 int strlen_newline(char *line);
 void free_map(t_game *map, int n);
+void size_check(t_game *map);
 void flood_fill(t_game *so_long);
 void upload_image(t_game *so_long);
 void put_image(t_game *so_long, int x, int y);

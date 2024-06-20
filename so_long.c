@@ -19,12 +19,19 @@ static void map_init(t_game *map)
 	map->mapname = NULL;
 	map->mapy = 0;
 	map->mapx = 0;
+	map->p_count = 0;
+	map->c_count = 0;
+	map->collected_count = 0;
+	map->e_count = 0;
+	map->w_count = 0;
 	map->player.x = 0;
 	map->player.y = 0;
 	map->exit.x = 0;
 	map->exit.y = 0;
 	map->collectible.x = 0;
 	map->collectible.y = 0;
+	map->mlx = NULL;
+	map->mlx_win = NULL;
 }
 
 void mlx_actions(t_game *so_long)
@@ -56,6 +63,7 @@ int main(int ac, char *av[])
 	map_init(map);
 	map->mapname = av[1];
 	read_map(map);
+	size_check(map);
 	flood_fill(map);
 	mlx_actions(map);
 	// free_map(map, 1);

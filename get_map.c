@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+static void countline(t_game *map);
 
 int strlen_newline(char *line)
 {

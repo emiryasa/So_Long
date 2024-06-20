@@ -14,7 +14,7 @@
 
 static void f_fill(t_game *map, int y, int x);
 static void flf_check(t_game *so_long);
-static char **ft_map_dup(const char **src);
+static char **ft_map_dup(char **src);
 
 void flood_fill(t_game *map)
 {
@@ -66,7 +66,7 @@ static void flf_check(t_game *so_long)
     }
 }
 
-static char **ft_map_dup(const char **src)
+static char **ft_map_dup(char **src)
 {
     char **dest;
     int i;
@@ -81,7 +81,7 @@ static char **ft_map_dup(const char **src)
     i = 0;
     while (src[i])
     {
-        dest[i] = (char *)malloc(sizeof(char) * (strlen(src[i]) + 1));
+        dest[i] = (char *)malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
         if (!dest[i])
             return (NULL);
         j = 0;

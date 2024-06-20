@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   so_long.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,10 +24,10 @@ int strlen_newline(char *line)
 	return (i);
 }
 
-static void	countline(t_map *map)
+static void countline(t_game *map)
 {
-	char	*str;
-	int	i;
+	char *str;
+	int i;
 	int fd;
 
 	fd = open(map->mapname, O_RDONLY);
@@ -43,32 +43,32 @@ static void	countline(t_map *map)
 		if (str == NULL)
 			break;
 		free(str);
-		i++; 
+		i++;
 	}
 	map->mapy = i;
 	close(fd);
 }
 
-void	read_map(t_map *map)
+void read_map(t_game *map)
 {
-    int	i;
-	int	fd;
+	int i;
+	int fd;
 
 	i = 0;
 	countline(map);
 	map->map = (char **)malloc(sizeof(char *) * (map->mapy + 1));
-    if (!map->map)
-    {
-        ft_printf("Map açılmadı");
-        exit(1);
-    }
+	if (!map->map)
+	{
+		ft_printf("Map açılmadı");
+		exit(1);
+	}
 	fd = open(map->mapname, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_printf("Error: File not opened.");
 		exit(1);
 	}
-    while (i < map->mapy)
+	while (i < map->mapy)
 	{
 		map->map[i] = get_next_line(fd);
 		i++;
@@ -78,9 +78,9 @@ void	read_map(t_map *map)
 	close(fd);
 }
 
-void	free_map(t_map *map, int n)
+void free_map(t_game *map, int n)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (n == 1)

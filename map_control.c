@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	size_check(t_map *map)
+void size_check(t_game *map)
 {
 	int i;
 	int x;
@@ -36,31 +36,100 @@ void	size_check(t_map *map)
 	wall_check(map);
 }
 
-static void	wall_check(t_map *so_long)
+static void wall_check(t_game *map)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = -1;
-	while (++y < so_long->mapy)
+	while (++y < map->mapy)
 	{
-		if (so_long->map[y][0] != '1' || so_long->map[y][so_long->mapx
-			- 1] != '1')
+		if (map->map[y][0] != '1' || map->map[y][map->mapx - 1] != '1')
 		{
 			ft_printf("Error: There is gap in walls.");
 			exit(1);
 		}
 	}
-	while (x < so_long->mapx)
+	while (x < map->mapx)
 	{
-		if (so_long->map[0][x] != '1' || so_long->map[so_long->mapy
-			- 1][x] != '1')
+		if (map->map[0][x] != '1' || map->map[map->mapy - 1][x] != '1')
 		{
 			ft_printf("Error: There is gap in walls.");
 			exit(1);
 		}
 		x++;
 	}
-	invalid_char(so_long, x, y);
+	invalid_char(map);
+}
+
+static void invalid_char(t_game *so_long)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < so_long->mapy)
+	{
+		x = 0;
+		while (x < so_long->mapx)
+		{
+			if (so_long->map[y][x] != 'P' && so_long->map[y][x] != 'E' && so_long->map[y][x] != 'C' && so_long->map[y][x] != '1' && so_long->map[y][x] != '0')
+			{
+				ft_printf("Error: Invalid character found");
+				exit(1);
+			}
+			x++;
+		}
+		y++;
+	}
+	get_location(so_long, 0, 0);
+}
+
+static void get_location(t_game *so_long, int x, int y)
+{
+	y = 0; // 1den de başlatabiliriz.
+	while (y < so_long->mapy)
+	{
+		x = 0;
+		while (x < so_long->mapx)
+		{
+			if (so_long->map[y][x] == 'P')
+			{
+				so_long->p_count += 1;
+				so_long->player.x = x;
+				so_long->player.y = y;
+			}
+			else if (so_long->map[y][x] == 'E')
+			{
+				so_long->e_count += 1;
+				so_long->exit.x = x;
+				so_long->exit.y = y;
+			}
+			else if (so_long->map[y][x] == 'C')
+				so_long->c_count += 1;
+			x++;
+		}
+		y++;
+	}
+	count_check(so_long);
+}
+
+static void count_check(t_game *so_long)
+{
+	if (so_long->e_count != 1)
+	{
+		ft_printf("Error: There is more than one exit.");
+		exit(1);
+	}
+	else if (so_long->c_count < 1)
+	{
+		ft_printf("Error: No no item to collect");
+		exit(1);
+	}
+	else if (so_long->p_count != 1)
+	{
+		ft_printf("Error: There is more than one player.");
+		exit(1);
+	}
 }

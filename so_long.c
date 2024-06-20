@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static void	map_init(t_map *map)
+static void map_init(t_game *map)
 {
 	map->map = NULL;
 	map->mapcopy = NULL;
@@ -27,22 +27,41 @@ static void	map_init(t_map *map)
 	map->collectible.y = 0;
 }
 
-int	main(int ac, char *av[])
+void mlx_actions(t_game *so_long)
 {
-	t_map	*map;
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	so_long->mlx = mlx_init();
+	so_long->mlx_win = mlx_new_window(so_long->mlx, so_long->mapx * 64,
+									  so_long->mapy * 64, "so_long");
+	upload_image(so_long);
+	put_image(so_long, x, y);
+	mlx_key_hook(so_long->mlx_win, ft_key, so_long);
+	mlx_hook(so_long->mlx_win, 17, 0, ft_close, so_long);
+	mlx_loop(so_long->mlx);
+}
+
+int main(int ac, char *av[])
+{
+	t_game *map;
 
 	if ((ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".ber", 4) != 0) || ac != 2)
 		ft_printf("Hatalı harita ismi.");
-	map = (t_map *)malloc(sizeof(t_map));
+	map = (t_game *)malloc(sizeof(t_game));
 	if (!map)
 		ft_printf("Hafıza hatası.");
 	map_init(map);
 	map->mapname = av[1];
 	read_map(map);
-	free_map(map, 1);
-	free(map);
+	flood_fill(map);
+	mlx_actions(map);
+	// free_map(map, 1);
+	// free(map);
 }
-void __attribute__ ((destructor))
+void __attribute__((destructor))
 a()
 {
 	system("leaks so_long");

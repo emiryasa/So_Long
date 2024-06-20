@@ -12,6 +12,11 @@
 
 #include "so_long.h"
 
+static void wall_check(t_game *map);
+static void invalid_char(t_game *so_long);
+static void get_location(t_game *so_long, int x, int y);
+static void count_check(t_game *so_long);
+
 void size_check(t_game *map)
 {
 	int i;

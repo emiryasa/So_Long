@@ -2,12 +2,12 @@ NAME = so_long
 CC = gcc
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
-# MLXDIR = minilibx
-# MLX = $(MLXDIR)/libmlx.a
-SRCS = map.c so_long.c
+MLXDIR = minilibx
+MLX = $(MLXDIR)/libmlx.a
+SRCS = get_map.c so_long.c map_control.c step.c window.c flood_fill.c
 OBJS := $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
-# FRAMEWORKS = -framework OpenGL -framework AppKit
+FRAMEWORKS = -framework OpenGL -framework AppKit
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/25 16:54:55 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/25 18:10:11 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,16 @@ static void	map_init(t_game *map)
 	map->player.y = 0;
 	map->exit.x = 0;
 	map->exit.y = 0;
+	map->move_count = 0;
 	map->collectible.x = 0;
 	map->collectible.y = 0;
 	map->mlx = NULL;
 	map->mlx_win = NULL;
+	map->imgs.collectable = NULL;
+	map->imgs.empty = NULL;
+	map->imgs.exit = NULL;
+	map->imgs.player = NULL;
+	map->imgs.wall = NULL;
 }
 
 void	mlx_actions(t_game *so_long)

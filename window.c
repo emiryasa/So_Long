@@ -6,7 +6,7 @@
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/25 16:54:45 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/25 18:07:49 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	upload_image(t_game *so_long)
 		|| !so_long->imgs.collectable || !so_long->imgs.exit)
 	{
 		ft_printf("Error: Missing image.");
+		free_map(so_long, 1);
 		exit(1);
 	}
 }

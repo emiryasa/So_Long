@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_fill.c                                          :+:      :+:    :+:   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/13 21:23:05 by eyasa            ###   ########.fr       */
+/*   Created: 2024/06/25 12:40:00 by eyasa             #+#    #+#             */
+/*   Updated: 2024/06/25 14:32:01 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void flf_check(t_game *so_long)
         {
             if (ft_strchr("PEC", so_long->mapcopy[i][j]))
             {
-                ft_printf("Error: For flood fill");
+                ft_printf("Error: Invalid map.\n");
                 free_map(so_long, 2);
                 exit(1);
             }
@@ -84,12 +84,9 @@ static char **ft_map_dup(char **src)
         dest[i] = (char *)malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
         if (!dest[i])
             return (NULL);
-        j = 0;
-        while (src[i][j])
-        {
-            dest[i][j] = src[i][j];
-            j++;
-        }
+        j = -1;
+        while (src[i][++j])
+    	    dest[i][j] = src[i][j];
         dest[i][j] = '\0';
         i++;
     }

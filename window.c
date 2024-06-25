@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/13 21:23:05 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/25 13:31:17 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void upload_image(t_game *so_long)
     int x;
     int y;
 
-    so_long->imgs.wall = mlx_xpm_file_to_image(so_long->mlx, "textures/rock1.xpm",
+    so_long->imgs.wall = mlx_xpm_file_to_image(so_long->mlx, "textures/wall.xpm",
                                                &x, &y);
     so_long->imgs.empty = mlx_xpm_file_to_image(so_long->mlx,
-                                                "textures/road.xpm", &x, &y);
+                                                "textures/floor.xpm", &x, &y);
     so_long->imgs.player = mlx_xpm_file_to_image(so_long->mlx,
-                                                 "textures/lightningmq.xpm", &x, &y);
+                                                 "textures/player.xpm", &x, &y);
     so_long->imgs.collectable = mlx_xpm_file_to_image(so_long->mlx,
                                                       "textures/collectable.xpm", &x, &y);
     so_long->imgs.exit = mlx_xpm_file_to_image(so_long->mlx, "textures/exit.xpm", &x,
@@ -99,5 +99,5 @@ void finish_message(t_game *solong, char c)
     }
     free(solong);
     mlx_destroy_window(solong->mlx, solong->mlx_win);
-    exit(1);
+    exit(0);
 }

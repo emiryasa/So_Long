@@ -6,7 +6,7 @@
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:45:17 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/13 21:23:05 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/25 13:30:15 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,4 @@ int main(int ac, char *av[])
 	mlx_actions(map);
 	// free_map(map, 1);
 	// free(map);
-}
-void __attribute__((destructor))
-a()
-{
-	system("leaks so_long");
 }

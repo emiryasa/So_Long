@@ -24,7 +24,6 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 	make fclean -C $(LIBFTDIR)
-	make fclean -C $(MLXDIR)
 
 re: fclean all
 

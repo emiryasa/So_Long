@@ -6,16 +6,17 @@
 /*   By: eyasa <eyasa@student.42istanbul.tr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:32:22 by eyasa             #+#    #+#             */
-/*   Updated: 2024/06/25 14:32:24 by eyasa            ###   ########.fr       */
+/*   Updated: 2024/06/25 16:55:03 by eyasa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-static void countline(t_game *map);
 
-int strlen_newline(char *line)
+static void	countline(t_game *map);
+
+int	strlen_newline(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
@@ -25,16 +26,16 @@ int strlen_newline(char *line)
 	return (i);
 }
 
-static void countline(t_game *map)
+static void	countline(t_game *map)
 {
-	char *str;
-	int i;
-	int fd;
+	char	*str;
+	int		i;
+	int		fd;
 
 	fd = open(map->mapname, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("Error: File not open.");
+		ft_printf("Error: File not open.\n");
 		exit(1);
 	}
 	i = 0;
@@ -42,7 +43,7 @@ static void countline(t_game *map)
 	{
 		str = get_next_line(fd);
 		if (str == NULL)
-			break;
+			break ;
 		free(str);
 		i++;
 	}
@@ -50,10 +51,10 @@ static void countline(t_game *map)
 	close(fd);
 }
 
-void read_map(t_game *map)
+void	read_map(t_game *map)
 {
-	int i;
-	int fd;
+	int	i;
+	int	fd;
 
 	i = 0;
 	countline(map);
@@ -79,9 +80,9 @@ void read_map(t_game *map)
 	close(fd);
 }
 
-void free_map(t_game *map, int n)
+void	free_map(t_game *map, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (n == 1)
